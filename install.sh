@@ -1,6 +1,7 @@
 #! /bin/bash
 	
 SNF_HOME=~/snf-tools
+mkdir -p $SNF_HOME
 
 # Check disribution of host machine
 CORRECT_DISTRO=`lsb_release -a 2>/dev/null | grep 'Ubuntu 12.04'`
@@ -18,7 +19,7 @@ sudo apt-get install -y python-setuptools python-guestfs python-dialog python-vi
 # Create virtual environment
 if [ ! -e $SNF_HOME/image-creator-env ]; then
 	virtualenv --system-site-packages $SNF_HOME/image-creator-env
-	source $SNF_HOME/image-creator-env/bin/activate
+	. $SNF_HOME/image-creator-env/bin/activate
 fi
 
 # Install kamaki
