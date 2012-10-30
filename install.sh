@@ -1,6 +1,5 @@
 #! /bin/bash
 	
-
 ######### Initial checks #########
 SNF_HOME=~/snf-tools
 INITIAL_PATH=`pwd`
@@ -10,17 +9,16 @@ txtgrn=$(tput setaf 2) 	# Make text green
 mkdir -p $SNF_HOME 	# Create home folder
 
 # Check disribution of host machine
-CORRECT_DISTRO=`lsb_release -a 2>/dev/null | grep 'Ubuntu 12.04'`
-if [ -z "$CORRECT_DISTRO" ]; then
-	echo "${txtred}Your distro is not Ubuntu 12.04. Leaving... ${txtrst}"
-	return 1
-fi
+# CORRECT_DISTRO=`lsb_release -a 2>/dev/null | grep 'Ubuntu 12.04'`
+# if [ -z "$CORRECT_DISTRO" ]; then
+#	echo "${txtred}Your distro is not Ubuntu 12.04. ${txtrst}"
+# fi
 
 # Check cpu virtualization extensions
 SVM=`grep svm /proc/cpuinfo`
 VMX=`grep vmx /proc/cpuinfo`
 if [ -z "$SVM" ] && [ -z "$VMX" ]; then
-	echo "${txtred}Your CPU does not support the necessary virtualization extensions${txtrst}"
+	echo "${txtred}Your CPU does not support the recommended virtualization extensions${txtrst}"
 fi
 
 ######### Install dependencies #########
