@@ -1,11 +1,12 @@
 #! /bin/bash
 
-# Clear virtual environment - NOT WORKING ATM
-`deactivate 2>/dev/null`
+# Clear virtual environment
+deactivate 2>/dev/null
 
 # Delete everything
 if [ ! -e ~/snf-tools ]; then
 	echo "Nothing to destroy. Leaving..."
 	exit 0
 fi	
-sudo -rf ~/snf-tools
+sudo rm -rf ~/snf-tools
+echo "All snf related tools have been removed."
