@@ -4,9 +4,9 @@
 deactivate 2>/dev/null
 
 # Delete everything
-if [ ! -e ~/snf-tools ]; then
+if [ ! -e /home/"`logname`"/snf-tools ]; then
 	echo "Nothing to destroy. Leaving..."
-	exit 0
+	return 0
 fi	
-sudo rm -rf ~/snf-tools
+sudo rm -rf /home/"`logname`"/snf-tools
 echo "All snf related tools have been removed."
