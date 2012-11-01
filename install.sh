@@ -2,7 +2,6 @@
 	
 ######### Initial checks #########
 SNF_HOME=/home/"`logname`"/snf-tools
-INITIAL_PATH=`pwd`
 txtrst=$(tput sgr0) 	# Reset text color
 txtred=$(tput setaf 1) 	# Make text red
 txtgrn=$(tput setaf 2) 	# Make text green
@@ -37,12 +36,10 @@ echo "${txtgrn}The python virtual environment has been activated.${txtrst}"
 if [ ! -e $SNF_HOME/synnefo ]; then
 	git clone https://code.grnet.gr/git/synnefo $SNF_HOME/synnefo	
 fi
-if [ ! -e $SNF_HOME/image-creator-env/bin/snf-common ]; then
+if [ ! -e $SNF_HOME/synnefo/snf-common/build ]; then	# not very sane
 	cd $SNF_HOME/synnefo/snf-common
-	chmod +x setup.py
-	./setup.py build && ./setup.py install
-	cd $INITIAL_PATH
-    echo "${txtgrn}The snf-common tool has been installed${txtrst}"
+	python setup.py build && python setup.py install
+	echo "${txtgrn}The snf-common tool has been installed${txtrst}"
 else
 	echo "${txtgrn}The snf-common tool has already been installed${txtrst}"
 fi
@@ -54,7 +51,6 @@ fi
 if [ ! -e $SNF_HOME/image-creator-env/bin/kamaki ]; then
 	cd $SNF_HOME/kamaki
 	./setup.py build && ./setup.py install
-	cd $INITIAL_PATH
 	echo "${txtgrn}The kamaki tool has been installed${txtrst}"
 else
 	echo "${txtgrn}The kamaki tool has already been installed${txtrst}"
@@ -67,9 +63,7 @@ fi
 if [ ! -e $SNF_HOME/image-creator-env/bin/snf-image-creator ]; then
 	cd $SNF_HOME/snf-image-creator
 	./setup.py build && ./setup.py install
-	cd $INITIAL_PATH
 	echo "${txtgrn}The snf-image-creator tool has been installed${txtrst}"
 else
 	echo "${txtgrn}The snf-image-creator tool has already been installed${txtrst}"
 fi
-return 0
