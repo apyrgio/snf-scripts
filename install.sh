@@ -8,7 +8,7 @@ txtgrn=$(tput setaf 2) 	# Make text green
 mkdir -p $SNF_HOME 	# Create home folder
 
 # Check linux disribution of host machine
-CORRECT_DISTRO=`lsb_release -a 2>/dev/null | grep 'Ubuntu 12.04'`
+CORRECT_DISTRO=`lsb_release -a | grep 'Ubuntu 12.04'`
 if [ -z "$CORRECT_DISTRO" ]; then
 	echo "${txtred}Your distro is not Ubuntu 12.04. ${txtrst}"
 fi
@@ -22,6 +22,12 @@ fi
 
 ######### Install dependencies #########
 sudo apt-get install -y python-setuptools python-guestfs python-dialog python-virtualenv python-dev python-gevent git
+
+if [ -z "`command -v virtualenv`" ]; then
+	echo "${txtred}Virtualenv has not been installed."
+	echo "Check your internet connection and re-start the script.${txtrst}"
+	exit 1
+fi
 
 ########## Create python virtual environment #########
 if [ ! -e $SNF_HOME/image-creator-env ]; then
