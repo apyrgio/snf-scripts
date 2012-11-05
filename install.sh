@@ -8,7 +8,7 @@ txtgrn=$(tput setaf 2) 	# Make text green
 mkdir -p $SNF_HOME 	# Create home folder
 
 # Check linux disribution of host machine
-CORRECT_DISTRO=`lsb_release -a | grep 'Ubuntu 12.04'`
+CORRECT_DISTRO=`lsb_release -a 2>/dev/null 2>/dev/null | grep 'Ubuntu 12.04'`
 if [ -z "$CORRECT_DISTRO" ]; then
 	echo "${txtred}Your distro is not Ubuntu 12.04. ${txtrst}"
 fi
@@ -32,13 +32,11 @@ fi
 ########## Create python virtual environment #########
 if [ ! -e $SNF_HOME/image-creator-env ]; then
 	virtualenv --system-site-packages $SNF_HOME/image-creator-env
-	. $SNF_HOME/image-creator-env/bin/activate
-else
-	. $SNF_HOME/image-creator-env/bin/activate 2>/dev/null
-fi	
+fi
+source $SNF_HOME/image-creator-env/bin/activate 2>/dev/null
 echo "${txtgrn}The python virtual environment has been activated.${txtrst}"
 
-######### Install snf-common #########
+######## Install snf-common #########
 if [ ! -e $SNF_HOME/synnefo ]; then
 	git clone https://code.grnet.gr/git/synnefo $SNF_HOME/synnefo	
 fi
@@ -54,10 +52,20 @@ fi
 if [ ! -e $SNF_HOME/kamaki ]; then
 	git clone https://code.grnet.gr/git/kamaki $SNF_HOME/kamaki
 fi
-if [ ! -e $SNF_HOME/image-creator-env/bin/kamaki ]; then
+if [ -z "`command -v kamaki`" ]; then
 	cd $SNF_HOME/kamaki
-	./setup.py build && ./setup.py install
-	echo "${txtgrn}The kamaki tool has been installed${txtrst}"
+	./setup.py build
+	./setup.py install 2>install.err
+	if [ -n "`grep "error" install.err`" ]; then
+		rm "`command -v kamaki`"
+		echo "${txtred}The kamaki tool could not be installed."
+		echo "Please consult the ${SNF_HOME}/kamaki/install.err file.${txtrst}"
+		exit 1
+	else
+		echo "${txtgrn}The kamaki tool has been installed${txtrst}"
+		rm install.err
+	fi
+		
 else
 	echo "${txtgrn}The kamaki tool has already been installed${txtrst}"
 fi
@@ -66,10 +74,19 @@ fi
 if [ ! -e $SNF_HOME/snf-image-creator ]; then
 	git clone https://code.grnet.gr/git/snf-image-creator $SNF_HOME/snf-image-creator
 fi
-if [ ! -e $SNF_HOME/image-creator-env/bin/snf-image-creator ]; then
+if [ -z "`command -v snf-image-creator`" ]; then
 	cd $SNF_HOME/snf-image-creator
-	./setup.py build && ./setup.py install
-	echo "${txtgrn}The snf-image-creator tool has been installed${txtrst}"
+	./setup.py build
+	./setup.py install 2>install.err
+	if [ -n "`grep "error" install.err`" ]; then
+                rm "`command -v snf-image-creator`"
+		echo "${txtred}The snf-image-creator tool could not be installed."
+		echo "Please consult the ${SNF_HOME}/snf-image-creator/install.err file.${txtrst}"
+		exit 1
+	else
+		echo "${txtgrn}The snf-image-creator tool has been installed${txtrst}"
+		rm install.err
+	fi		
 else
 	echo "${txtgrn}The snf-image-creator tool has already been installed${txtrst}"
 fi
