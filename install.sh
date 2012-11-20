@@ -8,7 +8,7 @@ txtgrn=$(tput setaf 2) 	# Make text green
 mkdir -p $SNF_HOME 	# Create home folder
 
 # Check linux disribution of host machine
-CORRECT_DISTRO=`lsb_release -a 2>/dev/null 2>/dev/null | grep 'Ubuntu 12.04'`
+CORRECT_DISTRO=`cat /etc/*-release | grep 'Ubuntu 12.04'`
 if [ -z "$CORRECT_DISTRO" ]; then
 	echo "${txtred}Your distro is not Ubuntu 12.04. ${txtrst}"
 fi
@@ -73,6 +73,7 @@ fi
 ######### Install snf-image-creator #########
 if [ ! -e $SNF_HOME/snf-image-creator ]; then
 	git clone https://code.grnet.gr/git/snf-image-creator $SNF_HOME/snf-image-creator
+	git checkout stable-0.1
 fi
 if [ -z "`command -v snf-image-creator`" ]; then
 	cd $SNF_HOME/snf-image-creator
