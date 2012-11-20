@@ -73,6 +73,7 @@ fi
 ######### Install snf-image-creator #########
 if [ ! -e $SNF_HOME/snf-image-creator ]; then
 	git clone https://code.grnet.gr/git/snf-image-creator $SNF_HOME/snf-image-creator
+	cd $SNF_HOME/snf-image-creator
 	git checkout stable-0.1
 fi
 if [ -z "`command -v snf-image-creator`" ]; then
