@@ -37,7 +37,6 @@ sudo curl https://dev.grnet.gr/files/apt-grnetdev.pub | sudo apt-key add -
 sudo apt-get update
 
 if ! apt-cache showpkg snf-image-creator > /dev/null 2>&1; then
-	echo $?
 	echo "${txtred}Repo installation failed.${txtrst}"
 	exit 1
 fi
@@ -46,7 +45,6 @@ fi
 sudo apt-get install -y snf-image-creator
 
 if ! dpkg -s snf-image-creator > /dev/null 2>&1; then
-	echo $?
 	echo "${txtred}snf-image-creator installation failed.${txtrst}"
 	exit 1
 else
