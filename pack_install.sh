@@ -24,6 +24,7 @@ sudo apt-get install -y curl
 
 ########## Add apt.dev.grnet repo  #########
 cd /etc/apt/sources.list.d
+sudo rm -f apt.dev.grnet.gr.list
 
 echo "deb http://apt.dev.grnet.gr precise main" | \
 	sudo tee -a  apt.dev.grnet.gr.list
@@ -35,7 +36,8 @@ sudo curl https://dev.grnet.gr/files/apt-grnetdev.pub | sudo apt-key add -
 ######## Verify proper addition of repo #########
 sudo apt-get update
 
-if [ apt-cache showpkg snf-image-creator > /dev/null 2>&1 ]; then
+if ! apt-cache showpkg snf-image-creator > /dev/null 2>&1; then
+	echo $?
 	echo "${txtred}Repo installation failed.${txtrst}"
 	exit 1
 fi
@@ -43,7 +45,8 @@ fi
 ######### Install snf-image-creator #########
 sudo apt-get install -y snf-image-creator
 
-if [ dkpg -s snf-image-creator > /dev/null 2>&1 ]; then
+if ! dpkg -s snf-image-creator > /dev/null 2>&1; then
+	echo $?
 	echo "${txtred}snf-image-creator installation failed.${txtrst}"
 	exit 1
 else
