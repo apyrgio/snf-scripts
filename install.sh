@@ -1,5 +1,5 @@
 #! /bin/bash
-	
+
 ######### Initial checks #########
 SNF_HOME=/home/"`logname`"/snf-tools
 txtrst=$(tput sgr0) 	# Reset text color
@@ -38,7 +38,7 @@ echo "${txtgrn}The python virtual environment has been activated.${txtrst}"
 
 ######## Install snf-common #########
 if [ ! -e $SNF_HOME/synnefo ]; then
-	git clone https://code.grnet.gr/git/synnefo $SNF_HOME/synnefo	
+	git clone https://code.grnet.gr/git/synnefo $SNF_HOME/synnefo
 fi
 if [ ! -e $SNF_HOME/synnefo/snf-common/build ]; then	# not very sane
 	cd $SNF_HOME/synnefo/snf-common
@@ -65,7 +65,6 @@ if [ -z "`command -v kamaki`" ]; then
 		echo "${txtgrn}The kamaki tool has been installed${txtrst}"
 		rm install.err
 	fi
-		
 else
 	echo "${txtgrn}The kamaki tool has already been installed${txtrst}"
 fi
@@ -88,7 +87,7 @@ if [ -z "`command -v snf-image-creator`" ]; then
 	else
 		echo "${txtgrn}The snf-image-creator tool has been installed${txtrst}"
 		rm install.err
-	fi		
+	fi
 else
 	echo "${txtgrn}The snf-image-creator tool has already been installed${txtrst}"
 fi
