@@ -21,7 +21,10 @@ if [ -z "$SVM" ] && [ -z "$VMX" ]; then
 fi
 
 ######### Install dependencies #########
-sudo apt-get install -y python-setuptools python-guestfs python-dialog python-virtualenv python-dev python-gevent git
+
+sudo apt-get update
+sudo apt-get install --fix-missing
+sudo apt-get install -y python-setuptools python-guestfs python-dialog python-virtualenv git
 
 if [ -z "`command -v virtualenv`" ]; then
 	echo "${txtred}Virtualenv has not been installed."
