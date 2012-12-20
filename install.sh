@@ -24,7 +24,7 @@ fi
 
 sudo apt-get update
 sudo apt-get install --fix-missing
-sudo apt-get install -y python-setuptools python-guestfs python-dialog python-virtualenv git
+sudo apt-get install -y python-dev python-setuptools python-guestfs python-dialog python-virtualenv git
 
 if [ -z "`command -v virtualenv`" ]; then
 	echo "${txtred}Virtualenv has not been installed."
